@@ -4,13 +4,25 @@ NexoERP es una aplicacion empresarial web monolitica construida con Python y Dja
 
 ## Fase 0
 
-Esta fase contiene solamente la base inicial del proyecto:
+La Fase 0 contiene la base inicial del proyecto:
 
 - Proyecto Django con modulo de configuracion `config`.
 - App inicial `core`.
 - Base de datos SQLite.
 - Ruta raiz `/` con una pagina de confirmacion.
 - Carpetas base para `templates` y `static`.
+
+## Fase 1
+
+La Fase 1 incorpora el layout base profesional:
+
+- Template global `base.html`.
+- Navbar superior con identidad de NexoERP.
+- Menu lateral con navegacion inicial.
+- Pagina de inicio heredando del layout base.
+- Pagina `/dashboard/` con tarjetas placeholder.
+- Bootstrap 5 mediante CDN.
+- Estilos propios en `static/css/styles.css`.
 
 ## Requisitos
 
@@ -24,7 +36,7 @@ Desde la raiz del proyecto:
 
 ```powershell
 py -m venv .venv
-.venv\Scripts\activate
+.\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
@@ -44,8 +56,8 @@ Luego abrir:
 http://127.0.0.1:8000/
 ```
 
-El navegador debe mostrar:
+Tambien se puede abrir:
 
 ```text
-NexoERP funcionando correctamente
+http://127.0.0.1:8000/dashboard/
 ```

@@ -1,14 +1,33 @@
-<!doctype html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NexoERP</title>
-</head>
-<body>
-    <main>
-        <h1>NexoERP funcionando correctamente</h1>
-        <p>Sistema empresarial web en Django</p>
-    </main>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Inicio | NexoERP{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="section-label">Base inicial</p>
+        <h1>NexoERP</h1>
+        <p class="lead mb-0">Sistema empresarial web en Django preparado para crecer por modulos.</p>
+    </div>
+    <a class="btn btn-primary" href="{% url 'core:dashboard' %}">Ir al Dashboard</a>
+</section>
+
+<section class="content-panel">
+    <div class="row g-4 align-items-center">
+        <div class="col-lg-8">
+            <h2>Layout base funcionando correctamente</h2>
+            <p>
+                La aplicacion ya cuenta con una estructura visual inicial con navbar,
+                menu lateral, templates heredables y estilos propios.
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <div class="status-card">
+                <span class="status-card-label">Estado</span>
+                <strong>NexoERP funcionando correctamente</strong>
+                <small>Fase 1 lista para validacion local.</small>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
