@@ -40,11 +40,28 @@ body {
 }
 
 .status-dot {
+    display: inline-block;
+    flex: 0 0 auto;
     width: 0.65rem;
     height: 0.65rem;
     border-radius: 50%;
     background: #16a34a;
     box-shadow: 0 0 0 0.25rem rgba(22, 163, 74, 0.14);
+}
+
+.auth-actions {
+    align-items: center;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.user-chip {
+    align-items: center;
+    color: var(--app-text);
+    display: inline-flex;
+    font-size: 0.9rem;
+    font-weight: 600;
+    gap: 0.55rem;
 }
 
 .app-layout {
@@ -112,6 +129,16 @@ body {
 
 .content-panel {
     padding: 1.5rem;
+}
+
+.login-panel {
+    max-width: 460px;
+}
+
+.auth-form .form-label {
+    color: var(--app-text);
+    font-size: 0.9rem;
+    font-weight: 700;
 }
 
 .content-panel h2 {
@@ -196,12 +223,30 @@ body {
         flex-direction: column;
     }
 
+    .auth-actions {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
     .dashboard-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
 @media (max-width: 575.98px) {
+    .app-navbar .container-fluid {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding-bottom: 0.85rem;
+        padding-top: 0.85rem;
+    }
+
+    .auth-actions {
+        justify-content: flex-start;
+        width: 100%;
+    }
+
     .dashboard-grid {
         grid-template-columns: 1fr;
     }

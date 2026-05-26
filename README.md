@@ -24,6 +24,24 @@ La Fase 1 incorpora el layout base profesional:
 - Bootstrap 5 mediante CDN.
 - Estilos propios en `static/css/styles.css`.
 
+## Fase 2
+
+La Fase 2 incorpora autenticacion basica con Django:
+
+- Login en `/accounts/login/`.
+- Logout mediante formulario POST.
+- Dashboard protegido para usuarios autenticados.
+- Estado de sesion visible en el navbar.
+- Enlace al admin para usuarios staff o superuser.
+- Comando `setup_roles` para crear grupos base.
+
+Grupos base:
+
+- Administrador
+- Gerencia
+- Analista
+- Invitado
+
 ## Requisitos
 
 - Python
@@ -46,6 +64,7 @@ pip install -r requirements.txt
 ```powershell
 python -m django --version
 python manage.py migrate
+python manage.py setup_roles
 python manage.py check
 python manage.py runserver
 ```
@@ -60,4 +79,10 @@ Tambien se puede abrir:
 
 ```text
 http://127.0.0.1:8000/dashboard/
+```
+
+Si no existe un superusuario local, se puede crear con:
+
+```powershell
+python manage.py createsuperuser
 ```

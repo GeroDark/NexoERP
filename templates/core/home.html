@@ -9,7 +9,11 @@
         <h1>NexoERP</h1>
         <p class="lead mb-0">Sistema empresarial web en Django preparado para crecer por modulos.</p>
     </div>
-    <a class="btn btn-primary" href="{% url 'core:dashboard' %}">Ir al Dashboard</a>
+    {% if user.is_authenticated %}
+        <a class="btn btn-primary" href="{% url 'core:dashboard' %}">Ir al Dashboard</a>
+    {% else %}
+        <a class="btn btn-primary" href="{% url 'login' %}">Iniciar sesion</a>
+    {% endif %}
 </section>
 
 <section class="content-panel">
@@ -17,15 +21,15 @@
         <div class="col-lg-8">
             <h2>Layout base funcionando correctamente</h2>
             <p>
-                La aplicacion ya cuenta con una estructura visual inicial con navbar,
-                menu lateral, templates heredables y estilos propios.
+                La aplicacion ya cuenta con layout profesional y autenticacion basica
+                usando el sistema nativo de Django.
             </p>
         </div>
         <div class="col-lg-4">
             <div class="status-card">
                 <span class="status-card-label">Estado</span>
                 <strong>NexoERP funcionando correctamente</strong>
-                <small>Fase 1 lista para validacion local.</small>
+                <small>Fase 2 lista para validacion local.</small>
             </div>
         </div>
     </div>

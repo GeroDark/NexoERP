@@ -17,9 +17,23 @@
                     <span class="brand-name">NexoERP</span>
                     <span class="brand-subtitle">Sistema Empresarial</span>
                 </a>
-                <div class="ms-auto d-flex align-items-center gap-2">
-                    <span class="status-dot"></span>
-                    <span class="small text-secondary">Entorno local</span>
+                <div class="auth-actions ms-auto">
+                    {% if user.is_authenticated %}
+                        <span class="user-chip">
+                            <span class="status-dot"></span>
+                            {{ user.get_username }}
+                        </span>
+                        {% if user.is_staff or user.is_superuser %}
+                            <a class="btn btn-outline-secondary btn-sm" href="{% url 'admin:index' %}">Admin</a>
+                        {% endif %}
+                        <form method="post" action="{% url 'logout' %}" class="m-0">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Cerrar sesion</button>
+                        </form>
+                    {% else %}
+                        <span class="small text-secondary">Sesion no iniciada</span>
+                        <a class="btn btn-primary btn-sm" href="{% url 'login' %}">Iniciar sesion</a>
+                    {% endif %}
                 </div>
             </div>
         </header>
