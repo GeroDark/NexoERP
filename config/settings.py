@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from django.contrib.messages import constants as messages
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -18,6 +20,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "core",
+    "empresas",
 ]
 
 MIDDLEWARE = [
@@ -91,3 +94,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "core:dashboard"
 LOGOUT_REDIRECT_URL = "core:home"
+
+MESSAGE_TAGS = {
+    messages.ERROR: "danger",
+}

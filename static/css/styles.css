@@ -151,6 +151,101 @@ body {
     margin-bottom: 0;
 }
 
+.message-stack {
+    margin-bottom: 1.5rem;
+}
+
+.search-bar {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.app-table {
+    margin-bottom: 0;
+}
+
+.table-actions {
+    align-items: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.table-actions form {
+    margin: 0;
+}
+
+.inactive-row {
+    opacity: 0.78;
+}
+
+.empty-state {
+    color: var(--app-muted);
+    padding: 2rem !important;
+    text-align: center;
+}
+
+.entity-form .form-label {
+    color: var(--app-text);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.form-actions,
+.header-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.form-actions {
+    border-top: 1px solid var(--app-border);
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+}
+
+.detail-header {
+    align-items: center;
+    border-bottom: 1px solid var(--app-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+.detail-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0;
+}
+
+.detail-grid div {
+    background: #f8fafc;
+    border: 1px solid var(--app-border);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.detail-grid dt {
+    color: var(--app-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+}
+
+.detail-grid dd {
+    margin-bottom: 0;
+}
+
+.detail-wide {
+    grid-column: 1 / -1;
+}
+
 .status-card {
     background: var(--app-primary-soft);
     border-radius: 0.5rem;
@@ -249,5 +344,14 @@ body {
 
     .dashboard-grid {
         grid-template-columns: 1fr;
+    }
+
+    .detail-grid,
+    .search-bar {
+        grid-template-columns: 1fr;
+    }
+
+    .search-bar {
+        flex-direction: column;
     }
 }

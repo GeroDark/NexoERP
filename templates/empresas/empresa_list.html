@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Empresas | NexoERP{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="section-label">Clientes</p>
+        <h1>Empresas</h1>
+        <p class="lead mb-0">Gestiona empresas y clientes registrados en el sistema.</p>
+    </div>
+    <a class="btn btn-primary" href="{% url 'empresas:empresa_create' %}">Nueva empresa</a>
+</section>
+
+<section class="content-panel">
+    <form method="get" class="search-bar">
+        <input
+            type="search"
+            name="q"
+            class="form-control"
+            placeholder="Buscar por razon social, documento o correo"
+            value="{{ query }}"
+        >
+        <button class="btn btn-outline-primary" type="submit">Buscar</button>
+        {% if query %}
+            <a class="btn btn-outline-secondary" href="{% url 'empresas:empresa_list' %}">Limpiar</a>
+        {% endif %}
+    </form>
+
+    <div class="table-responsive mt-4">
+        <table class="table align-middle app-table">
+            <thead>
+                <tr>
+                    <th>Razon social</th>
+                    <th>Documento</th>
+                    <th>Correo</th>
+                    <th>Estado</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for empresa in empresas %}
+                    <tr class="{% if not empresa.activo %}table-secondary inactive-row{% endif %}">
+                        <td>
+                            <strong>{{ empresa.razon_social }}</strong>
+                            {% if empresa.nombre_comercial %}
+                                <small class="d-block text-secondary">{{ empresa.nombre_comercial }}</small>
+                            {% endif %}
+                        </td>
+                        <td>{{ empresa.tipo_documento }} {{ empresa.numero_documento }}</td>
+                        <td>{{ empresa.correo|default:"--" }}</td>
+                        <td>
+                            {% if empresa.activo %}
+                                <span class="badge text-bg-success">Activa</span>
+                            {% else %}
+                                <span class="badge text-bg-secondary">Inactiva</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end">
+                            <div class="table-actions">
+                                <a class="btn btn-outline-secondary btn-sm" href="{% url 'empresas:empresa_detail' empresa.pk %}">Ver</a>
+                                <a class="btn btn-outline-primary btn-sm" href="{% url 'empresas:empresa_update' empresa.pk %}">Editar</a>
+                                {% if empresa.activo %}
+                                    <form method="post" action="{% url 'empresas:empresa_deactivate' empresa.pk %}">
+                                        {% csrf_token %}
+                                        <button class="btn btn-outline-danger btn-sm" type="submit">Desactivar</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="empty-state">
+                            No hay empresas registradas.
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

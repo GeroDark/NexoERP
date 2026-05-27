@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}{{ empresa.razon_social }} | NexoERP{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="section-label">Detalle de empresa</p>
+        <h1>{{ empresa.razon_social }}</h1>
+        <p class="lead mb-0">
+            {% if empresa.nombre_comercial %}{{ empresa.nombre_comercial }}{% else %}Informacion general del cliente.{% endif %}
+        </p>
+    </div>
+    <div class="header-actions">
+        <a class="btn btn-outline-secondary" href="{% url 'empresas:empresa_list' %}">Volver</a>
+        <a class="btn btn-primary" href="{% url 'empresas:empresa_update' empresa.pk %}">Editar</a>
+    </div>
+</section>
+
+<section class="content-panel">
+    <div class="detail-header">
+        {% if empresa.activo %}
+            <span class="badge text-bg-success">Activa</span>
+        {% else %}
+            <span class="badge text-bg-secondary">Inactiva</span>
+        {% endif %}
+        <span class="text-secondary">Documento: {{ empresa.tipo_documento }} {{ empresa.numero_documento }}</span>
+    </div>
+
+    <dl class="detail-grid">
+        <div>
+            <dt>Correo</dt>
+            <dd>{{ empresa.correo|default:"--" }}</dd>
+        </div>
+        <div>
+            <dt>Telefono</dt>
+            <dd>
+                {% if empresa.telefono %}
+                    {{ empresa.codigo_pais }} {{ empresa.telefono }}
+                {% else %}
+                    --
+                {% endif %}
+            </dd>
+        </div>
+        <div>
+            <dt>Sitio web</dt>
+            <dd>
+                {% if empresa.sitio_web %}
+                    <a href="{{ empresa.sitio_web }}" target="_blank" rel="noopener">{{ empresa.sitio_web }}</a>
+                {% else %}
+                    --
+                {% endif %}
+            </dd>
+        </div>
+        <div>
+            <dt>Creada</dt>
+            <dd>{{ empresa.creado_en|date:"d/m/Y H:i" }}</dd>
+        </div>
+        <div class="detail-wide">
+            <dt>Direccion</dt>
+            <dd>{{ empresa.direccion|linebreaksbr|default:"--" }}</dd>
+        </div>
+        <div class="detail-wide">
+            <dt>Notas</dt>
+            <dd>{{ empresa.notas|linebreaksbr|default:"--" }}</dd>
+        </div>
+    </dl>
+
+    {% if empresa.activo %}
+        <form method="post" action="{% url 'empresas:empresa_deactivate' empresa.pk %}" class="mt-4">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger">Desactivar empresa</button>
+        </form>
+    {% endif %}
+</section>
+{% endblock %}

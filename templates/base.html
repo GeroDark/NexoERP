@@ -43,7 +43,7 @@
                 <nav class="nav flex-column gap-1">
                     <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'core:home' %}">Inicio</a>
                     <a class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'core:dashboard' %}">Dashboard</a>
-                    <a class="nav-link disabled-link" href="#">Empresas</a>
+                    <a class="nav-link {% if request.resolver_match.app_name == 'empresas' %}active{% endif %}" href="{% url 'empresas:empresa_list' %}">Empresas</a>
                     <a class="nav-link disabled-link" href="#">Contactos</a>
                     <a class="nav-link disabled-link" href="#">Procesos</a>
                     <a class="nav-link disabled-link" href="#">Documentos</a>
@@ -53,6 +53,16 @@
             </aside>
 
             <main class="app-content">
+                {% if messages %}
+                    <div class="message-stack">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
                 {% block content %}{% endblock %}
             </main>
         </div>

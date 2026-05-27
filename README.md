@@ -42,6 +42,18 @@ Grupos base:
 - Analista
 - Invitado
 
+## Fase 3
+
+La Fase 3 incorpora el modulo de empresas/clientes:
+
+- App Django `empresas`.
+- Modelo `Empresa` con desactivacion logica.
+- Listado protegido en `/empresas/`.
+- Busqueda por razon social, nombre comercial, documento o correo.
+- Creacion, detalle, edicion y desactivacion de empresas.
+- Registro del modelo en Django Admin.
+- Validaciones basicas de documento, correo, codigo de pais y telefono.
+
 ## Requisitos
 
 - Python
@@ -63,6 +75,7 @@ pip install -r requirements.txt
 
 ```powershell
 python -m django --version
+python manage.py makemigrations empresas
 python manage.py migrate
 python manage.py setup_roles
 python manage.py check
@@ -79,6 +92,12 @@ Tambien se puede abrir:
 
 ```text
 http://127.0.0.1:8000/dashboard/
+```
+
+Modulo de empresas:
+
+```text
+http://127.0.0.1:8000/empresas/
 ```
 
 Si no existe un superusuario local, se puede crear con:
