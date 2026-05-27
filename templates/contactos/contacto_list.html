@@ -1,93 +1,38 @@
 {% extends "base.html" %}
 
-{% block title %}{{ empresa.razon_social }} | NexoERP{% endblock %}
+{% block title %}Contactos | NexoERP{% endblock %}
 
 {% block content %}
 <section class="page-header">
     <div>
-        <p class="section-label">Detalle de empresa</p>
-        <h1>{{ empresa.razon_social }}</h1>
-        <p class="lead mb-0">
-            {% if empresa.nombre_comercial %}{{ empresa.nombre_comercial }}{% else %}Informacion general del cliente.{% endif %}
-        </p>
+        <p class="section-label">Relaciones comerciales</p>
+        <h1>Contactos</h1>
+        <p class="lead mb-0">Gestiona contactos empresariales vinculados a clientes.</p>
     </div>
-    <div class="header-actions">
-        <a class="btn btn-outline-secondary" href="{% url 'empresas:empresa_list' %}">Volver</a>
-        <a class="btn btn-primary" href="{% url 'empresas:empresa_update' empresa.pk %}">Editar</a>
-    </div>
+    <a class="btn btn-primary" href="{% url 'contactos:contacto_create' %}">Nuevo contacto</a>
 </section>
 
 <section class="content-panel">
-    <div class="detail-header">
-        {% if empresa.activo %}
-            <span class="badge text-bg-success">Activa</span>
-        {% else %}
-            <span class="badge text-bg-secondary">Inactiva</span>
+    <form method="get" class="search-bar">
+        <input
+            type="search"
+            name="q"
+            class="form-control"
+            placeholder="Buscar por nombre, cargo, correo, telefono o empresa"
+            value="{{ query }}"
+        >
+        <button class="btn btn-outline-primary" type="submit">Buscar</button>
+        {% if query %}
+            <a class="btn btn-outline-secondary" href="{% url 'contactos:contacto_list' %}">Limpiar</a>
         {% endif %}
-        <span class="text-secondary">Documento: {{ empresa.tipo_documento }} {{ empresa.numero_documento }}</span>
-    </div>
-
-    <dl class="detail-grid">
-        <div>
-            <dt>Correo</dt>
-            <dd>{{ empresa.correo|default:"--" }}</dd>
-        </div>
-        <div>
-            <dt>Telefono</dt>
-            <dd>
-                {% if empresa.telefono %}
-                    {{ empresa.codigo_pais }} {{ empresa.telefono }}
-                {% else %}
-                    --
-                {% endif %}
-            </dd>
-        </div>
-        <div>
-            <dt>Sitio web</dt>
-            <dd>
-                {% if empresa.sitio_web %}
-                    <a href="{{ empresa.sitio_web }}" target="_blank" rel="noopener">{{ empresa.sitio_web }}</a>
-                {% else %}
-                    --
-                {% endif %}
-            </dd>
-        </div>
-        <div>
-            <dt>Creada</dt>
-            <dd>{{ empresa.creado_en|date:"d/m/Y H:i" }}</dd>
-        </div>
-        <div class="detail-wide">
-            <dt>Direccion</dt>
-            <dd>{{ empresa.direccion|linebreaksbr|default:"--" }}</dd>
-        </div>
-        <div class="detail-wide">
-            <dt>Notas</dt>
-            <dd>{{ empresa.notas|linebreaksbr|default:"--" }}</dd>
-        </div>
-    </dl>
-
-    {% if empresa.activo %}
-        <form method="post" action="{% url 'empresas:empresa_deactivate' empresa.pk %}" class="mt-4">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-outline-danger">Desactivar empresa</button>
-        </form>
-    {% endif %}
-</section>
-
-<section class="content-panel mt-4">
-    <div class="section-toolbar">
-        <div>
-            <h2>Contactos asociados</h2>
-            <p>Personas vinculadas a esta empresa.</p>
-        </div>
-        <a class="btn btn-primary" href="{% url 'contactos:contacto_create_for_empresa' empresa.pk %}">Agregar contacto</a>
-    </div>
+    </form>
 
     <div class="table-responsive mt-4">
         <table class="table align-middle app-table">
             <thead>
                 <tr>
                     <th>Contacto</th>
+                    <th>Empresa</th>
                     <th>Cargo</th>
                     <th>Correo</th>
                     <th>Telefono</th>
@@ -96,13 +41,16 @@
                 </tr>
             </thead>
             <tbody>
-                {% for contacto in empresa.contactos.all %}
+                {% for contacto in contactos %}
                     <tr class="{% if not contacto.activo %}table-secondary inactive-row{% endif %}">
                         <td>
                             <strong>{{ contacto.nombre_completo }}</strong>
                             {% if contacto.es_principal %}
                                 <span class="badge text-bg-primary ms-2">Principal</span>
                             {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'empresas:empresa_detail' contacto.empresa.pk %}">{{ contacto.empresa.razon_social }}</a>
                         </td>
                         <td>{{ contacto.cargo|default:"--" }}</td>
                         <td>{{ contacto.correo|default:"--" }}</td>
@@ -129,7 +77,7 @@
                                 {% if contacto.activo %}
                                     <form method="post" action="{% url 'contactos:contacto_deactivate' contacto.pk %}">
                                         {% csrf_token %}
-                                        <input type="hidden" name="next" value="{{ request.path }}">
+                                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
                                         <button class="btn btn-outline-danger btn-sm" type="submit">Desactivar</button>
                                     </form>
                                 {% endif %}
@@ -138,8 +86,8 @@
                     </tr>
                 {% empty %}
                     <tr>
-                        <td colspan="6" class="empty-state">
-                            No hay contactos registrados para esta empresa.
+                        <td colspan="7" class="empty-state">
+                            No hay contactos registrados.
                         </td>
                     </tr>
                 {% endfor %}

@@ -54,6 +54,21 @@ La Fase 3 incorpora el modulo de empresas/clientes:
 - Registro del modelo en Django Admin.
 - Validaciones basicas de documento, correo, codigo de pais y telefono.
 
+## Fase 4
+
+La Fase 4 incorpora el modulo de contactos empresariales:
+
+- App Django `contactos`.
+- Modelo `Contacto` relacionado con `Empresa`.
+- Listado protegido en `/contactos/`.
+- Busqueda por nombre, cargo, correo, telefono, celular o empresa.
+- Validaciones de correo, telefono y celular.
+- Codigos de pais para telefono y celular.
+- Creacion, detalle, edicion y desactivacion logica de contactos.
+- Creacion de contactos desde el detalle de una empresa.
+- Visualizacion de contactos asociados dentro del detalle de empresa.
+- Registro del modelo en Django Admin.
+
 ## Requisitos
 
 - Python
@@ -76,6 +91,7 @@ pip install -r requirements.txt
 ```powershell
 python -m django --version
 python manage.py makemigrations empresas
+python manage.py makemigrations contactos
 python manage.py migrate
 python manage.py setup_roles
 python manage.py check
@@ -98,6 +114,12 @@ Modulo de empresas:
 
 ```text
 http://127.0.0.1:8000/empresas/
+```
+
+Modulo de contactos:
+
+```text
+http://127.0.0.1:8000/contactos/
 ```
 
 Si no existe un superusuario local, se puede crear con:

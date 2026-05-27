@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}{{ contacto.nombre_completo }} | NexoERP{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="section-label">Detalle de contacto</p>
+        <h1>{{ contacto.nombre_completo }}</h1>
+        <p class="lead mb-0">{{ contacto.empresa.razon_social }}</p>
+    </div>
+    <div class="header-actions">
+        <a class="btn btn-outline-secondary" href="{% url 'contactos:contacto_list' %}">Volver</a>
+        <a class="btn btn-primary" href="{% url 'contactos:contacto_update' contacto.pk %}">Editar</a>
+    </div>
+</section>
+
+<section class="content-panel">
+    <div class="detail-header">
+        {% if contacto.activo %}
+            <span class="badge text-bg-success">Activo</span>
+        {% else %}
+            <span class="badge text-bg-secondary">Inactivo</span>
+        {% endif %}
+        {% if contacto.es_principal %}
+            <span class="badge text-bg-primary">Contacto principal</span>
+        {% endif %}
+        <span class="text-secondary">
+            Empresa:
+            <a href="{% url 'empresas:empresa_detail' contacto.empresa.pk %}">{{ contacto.empresa.razon_social }}</a>
+        </span>
+    </div>
+
+    <dl class="detail-grid">
+        <div>
+            <dt>Cargo</dt>
+            <dd>{{ contacto.cargo|default:"--" }}</dd>
+        </div>
+        <div>
+            <dt>Correo</dt>
+            <dd>{{ contacto.correo|default:"--" }}</dd>
+        </div>
+        <div>
+            <dt>Telefono</dt>
+            <dd>
+                {% if contacto.telefono %}
+                    {{ contacto.codigo_pais_telefono }} {{ contacto.telefono }}
+                {% else %}
+                    --
+                {% endif %}
+            </dd>
+        </div>
+        <div>
+            <dt>Celular</dt>
+            <dd>
+                {% if contacto.celular %}
+                    {{ contacto.codigo_pais_celular }} {{ contacto.celular }}
+                {% else %}
+                    --
+                {% endif %}
+            </dd>
+        </div>
+        <div>
+            <dt>Creado</dt>
+            <dd>{{ contacto.creado_en|date:"d/m/Y H:i" }}</dd>
+        </div>
+        <div>
+            <dt>Actualizado</dt>
+            <dd>{{ contacto.actualizado_en|date:"d/m/Y H:i" }}</dd>
+        </div>
+        <div class="detail-wide">
+            <dt>Notas</dt>
+            <dd>{{ contacto.notas|linebreaksbr|default:"--" }}</dd>
+        </div>
+    </dl>
+
+    {% if contacto.activo %}
+        <form method="post" action="{% url 'contactos:contacto_deactivate' contacto.pk %}" class="mt-4">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger">Desactivar contacto</button>
+        </form>
+    {% endif %}
+</section>
+{% endblock %}

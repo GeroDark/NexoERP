@@ -44,7 +44,7 @@
                     <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'core:home' %}">Inicio</a>
                     <a class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'core:dashboard' %}">Dashboard</a>
                     <a class="nav-link {% if request.resolver_match.app_name == 'empresas' %}active{% endif %}" href="{% url 'empresas:empresa_list' %}">Empresas</a>
-                    <a class="nav-link disabled-link" href="#">Contactos</a>
+                    <a class="nav-link {% if request.resolver_match.app_name == 'contactos' %}active{% endif %}" href="{% url 'contactos:contacto_list' %}">Contactos</a>
                     <a class="nav-link disabled-link" href="#">Procesos</a>
                     <a class="nav-link disabled-link" href="#">Documentos</a>
                     <a class="nav-link disabled-link" href="#">Tareas</a>
